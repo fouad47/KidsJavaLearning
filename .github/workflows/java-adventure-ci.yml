@@ -1,0 +1,61 @@
+name: Java Learning Adventure CI
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up JDK 21
+      uses: actions/setup-java@v3
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+
+    - name: Compile and Run All Chapters
+      run: |
+        cd src
+        echo "🚀 Starting compilation..."
+        find . -name "*.java" > sources.txt
+        javac @sources.txt
+        echo "✅ Compilation successful!"
+        
+        echo "🎮 Running Chapter Main classes..."
+        # List of all packages with Main classes
+        CHAPTERS=(
+          "com.kids.java.chapter01_basics"
+          "com.kids.java.chapter02_variables"
+          "com.kids.java.chapter03_conditions"
+          # Chapter 04 is skipped as it requires interactive user input
+          "com.kids.java.chapter05_class_object"
+          "com.kids.java.chapter06_encapsulation"
+          "com.kids.java.chapter07_inheritance"
+          "com.kids.java.chapter08_polymorphism"
+          "com.kids.java.chapter09_abstraction"
+          "com.kids.java.chapter10_interfaces"
+          "com.kids.java.chapter11_static_final"
+          "com.kids.java.chapter12_exception_handling"
+          "com.kids.java.chapter13_collections"
+          "com.kids.java.chapter14_file_handling"
+          "com.kids.java.chapter15_enum"
+          "com.kids.java.chapter16_generics"
+          "com.kids.java.chapter17_multithreading"
+          "com.kids.java.chapter18_lambda_streams"
+          "com.kids.java.chapter19_test_automation_basics"
+          "com.kids.java.chapter20_mini_project"
+        )
+        
+        for chapter in "${CHAPTERS[@]}"; do
+          echo "--------------------------------------------------"
+          echo "🏃 Running $chapter..."
+          java $chapter.Main
+        done
+        echo "--------------------------------------------------"
+        echo "🏆 All chapters ran successfully!"
