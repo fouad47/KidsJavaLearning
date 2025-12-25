@@ -1,4 +1,4 @@
-package com.kids.java.chapter06_encapsulation;
+package com.kids.java.chapter05_class_object;
 
 /*
  * 🚗 CHAPTER 4: The Blueprint (The Class)
